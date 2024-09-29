@@ -49,15 +49,8 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "corsheaders",
     # my apps
-    "blogs",
-    "common",
-    "customer_support",
-    "dashboard",
-    "home",
     "login",
-    "services",
     "sentiment_analysis",
-    "products",
     # Other apps…
     "phonenumber_field",
 ]
@@ -168,9 +161,8 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAuthenticated',
     # ],
     # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework.authentication.BasicAuthentication',  # enables simple command line authentication
-    #     'rest_framework.authentication.SessionAuthentication',
     #     'rest_framework.authentication.TokenAuthentication',
+    #     'rest_framework.authentication.SessionAuthentication',
     # )
 }
 
