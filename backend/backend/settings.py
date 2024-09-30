@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     # my apps
     "login",
     "sentiment_analysis",
+    "feedback",
     # Other apps…
     "phonenumber_field",
 ]
