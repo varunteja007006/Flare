@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/auth/', include("login.urls")),
     path('api/v1/feedback/', include("feedback.urls")),
+    path('api/v1/login/', include("login.urls")),
     path('api/v1/sentiment_analysis/', include("sentiment_analysis.urls")),
 ]
 
