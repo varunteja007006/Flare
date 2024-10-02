@@ -13,7 +13,7 @@ def login(request):
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key, 
                          'created': created, 
-                         'username': user.get_full_name(), 
+                         'full_name': user.get_full_name(), 
                          'email': user.email  }, 
                         status=status.HTTP_200_OK)
     except User.DoesNotExist:

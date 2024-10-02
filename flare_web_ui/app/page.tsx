@@ -1,11 +1,17 @@
-import { ModeToggle } from "@/components/ui/theme-toggle";
+import { Navbar } from "@/components/common/nav/Navbar";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <ModeToggle />
+    <div className="min-h-screen min-w-[100vw] font-[family-name:var(--font-geist-sans)]">
+      <header>
+        <Navbar />
+      </header>
+      <main className="flex flex-col items-center sm:items-start px-8 pt-6 pb-20 min-h-[85vh]">
+        Home
       </main>
+      <footer className="flex flex-col items-center sm:items-start px-8 py-6">
+        Footer
+      </footer>
     </div>
   );
 }
