@@ -48,12 +48,15 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
+    # Other apps…
+    "phonenumber_field",
+    'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2',
     # my apps
     "login",
     "sentiment_analysis",
     "feedback",
-    # Other apps…
-    "phonenumber_field",
 ]
 
 MIDDLEWARE = [
@@ -82,6 +85,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #oauth social
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -179,3 +185,8 @@ CORS_ALLOW_CREDENTIALS = True
 #     "http://localhost:8080",
 #     "http://127.0.0.1:9000"
 # ]
+
+AUTHENTICATION_BACKENDS = (
+   'drf_social_oauth2.backends.DjangoOAuth2',
+   'django.contrib.auth.backends.ModelBackend',
+)
