@@ -11,12 +11,12 @@ from drf_yasg import openapi
 # Schema view setup for Swagger and ReDoc
 schema_view = get_schema_view(
    openapi.Info(
-      title="Your Project API",
+      title="Flare",
       default_version='v1',
-      description="API documentation for your project",
-      terms_of_service="https://www.example.com/terms/",
-      contact=openapi.Contact(email="contact@example.com"),
-      license=openapi.License(name="BSD License"),
+      description="API documentation for Flare ERP CRM system",
+    #   terms_of_service="https://www.example.com/terms/",
+    #   contact=openapi.Contact(email="contact@example.com"),
+    #   license=openapi.License(name="BSD License"),
    ),
    public=True,
    permission_classes=(permissions.AllowAny,),
