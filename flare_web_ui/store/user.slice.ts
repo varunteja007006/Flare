@@ -23,7 +23,6 @@ export const createUserSlice: StateCreator<
   full_name: "",
   fetchUser: async () => {
     const data = await getUser();
-
     set({
       full_name: data?.full_name ?? "",
       email: data?.email ?? "",
