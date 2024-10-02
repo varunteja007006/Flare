@@ -1,10 +1,10 @@
 # Project Setup
 
-#### Setup steps are for Linux (Mint).
+#### Setup steps are for Linux (Mint) system.
 
 ## BACKEND
 
-### Python virtual environment
+#### Python virtual environment
 
 Create a virtual env (Python)
 
@@ -15,13 +15,13 @@ pip install virtualenv
 Create a environment
 
 ```sh
-virtualenv linux_env
+virtualenv env
 ```
 
 Activate the new python environment
 
 ```sh
-source linux_env/bin/activate
+source env/bin/activate
 ```
 
 Confirm the new python environment
@@ -32,7 +32,7 @@ which python3
 
 <br>
 
-### pip
+#### pip
 
 Access pip packages
 
@@ -46,42 +46,17 @@ Upgrade pip
 pip install --upgrade pip
 ```
 
-<br>
-
-### Installing Django
+Install required packages from requirements.txt
 
 ```sh
-python3 -m pip install Django
+pip install -r requirements.txt
 ```
-
-<br>
-
-### Installing Django Rest Framework
-
-```sh
-pip install djangorestframework
-```
-
-Few configurations include, adding 'rest_framework' to your INSTALLED_APPS setting.
-Checkout the [Django Rest Framework documentation](https://www.django-rest-framework.org/)
-
-<br>
-
-### Installing Django Cors Headers
-
-```sh
-pip install django-cors-headers
-```
-
-This helps to resolve the CORs errors when React frontend makes the request to the backend Django.
-This also requires you to add the 'cors_headers' to your INSTALLED_APPS setting and also configuring
-the middleware. Check it here https://pypi.org/project/django-cors-headers/ for more information.
 
 <br>
 
 ## Postgres setup
 
-#### Alternative to sqlite provided by Django
+An alternative to sqlite provided by Django
 
 ### Installing Postgresql and DBeaver
 
@@ -174,8 +149,16 @@ Now you can create database --> table --> data.
 
 Next JS setup:
 
+To initiate a new project
+
 ```sh
 npx create-next-app@latest
+```
+
+Install packages/modules
+
+```sh
+npm run i
 ```
 
 Run server
@@ -205,18 +188,24 @@ Expo out of the box provides better tools for building the android app.
 
 First let us create a expo app & give it a name mobile.
 
-```
+```sh
 create-expo-app mobile
+```
+
+Install packages/modules
+
+```sh
+npm run i
 ```
 
 If it is required to run the project on the web use the following command.
 
-```
+```sh
 npx expo install react-dom react-native-web @expo/webpack-config
 ```
 
 Run the app on mobile and web.
 
-```
+```sh
 npx expo start
 ```

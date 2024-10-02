@@ -1,8 +1,21 @@
 # Django
 
+### Folder structure
+
+- backend/
+  - backend/ []
+  - feedback/
+  - login/
+  - media/
+  - sentiment_analysis/
+  - static
+  - .env
+  - manage.py
+  - requirements.txt
+
 ### Migrate tables after updating the models
 
-Usual Way
+Usual way
 
 ```sh
 python manage.py makemigrations
@@ -17,6 +30,18 @@ Forcefully
 ```sh
 python manage.py migrate --run-syncdb
 ```
+
+###
+
+### Django auth
+
+You can extend the authentication to include much more features and endpoints
+
+https://drf-social-oauth2.readthedocs.io/en/latest/integration.html
+
+https://django-oauth-toolkit.readthedocs.io/en/latest/
+
+###
 
 ### Django Cities_light
 
@@ -39,17 +64,6 @@ If Cities_light database is empty. Follow the below steps:
 ```sh
 ./manage.py cities_light --force-import-all
 ```
-
-### Packages for Django
-
-Package for Django env variables
-
-```sh
-pip install django-environ
-```
-
-<br>
-<br>
 
 ### PostgreSQL setup for Django
 
@@ -89,17 +103,3 @@ Why serializer & restframework needed?
 - [Article on Django Deployment](https://appliku.com/post/deploy-django-hetzner-cloud)
 
 ##
-
-#### Folder structure
-
-- backend/
-  - backend/ []
-  - common/ [ Feedback ]
-  - employee/ []
-  - home/ []
-  - login/ []
-  - media/ []
-  - organization/ []
-  - static/ []
-  - utils/ []
-  - .env
