@@ -17,10 +17,42 @@ def login(request):
                          'email': user.email  }, 
                         status=status.HTTP_200_OK)
     except User.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': 'User not found'},status=status.HTTP_404_NOT_FOUND)
     
+@api_view(['POST'])
 def signup(request):
-    return 
+    try:
+        # Check if the username already exists
+        if User.objects.filter(username=request.data["username"]).exists():
+            return Response({'error': 'Username already exists'}, status=status.HTTP_409_CONFLICT)
+        
+        # Check if the email already exists
+        if User.objects.filter(email=request.data["email"]).exists():
+            return Response({'error': 'Email already exists'}, status=status.HTTP_409_CONFLICT)
+
+
+        user = User.objects.create_user(
+            username=request.data["username"],
+            email=request.data["email"],
+            first_name=request.data["first_name"],
+            last_name=request.data["last_name"],
+            password=request.data["password"]
+        )        
+        user.save()
+        
+        token, created = Token.objects.get_or_create(user=user)
+
+        return Response({
+            'token': token.key,
+            'created': created,
+            'full_name': user.get_full_name(),
+            'email': user.email
+        }, status=status.HTTP_201_CREATED)
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 @api_view(['POST'])
 def logout(request):
@@ -29,7 +61,7 @@ def logout(request):
         token.delete()
         return Response(status=status.HTTP_200_OK)
     except Token.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': 'Token not found'},status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -42,7 +74,7 @@ def test_token(request):
         }
         return Response(user_data, status=status.HTTP_200_OK)
     else:
-        return Response(status=status.HTTP_401_UNAUTHORIZED)
+        return Response({'error': 'User not authenticated'},status=status.HTTP_401_UNAUTHORIZED)
 
 
 @api_view(['POST'])
