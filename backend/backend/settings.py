@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "login",
     "sentiment_analysis",
     "feedback",
+    "userprofile",
 ]
 
 MIDDLEWARE = [
