@@ -24,13 +24,16 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/auth/', include("login.urls")),
     path('api/v1/feedback/', include("feedback.urls")),
-    path('api/v1/login/', include("login.urls")),
     path('api/v1/sentiment_analysis/', include("sentiment_analysis.urls")),
+    path('api/v1/user_management/', include("user_management.urls")),
+
+    # Authentication APIs
+    path('api/v1/auth/', include("login.urls")),
+    path('api/v1/login/', include("login.urls")),
     re_path(r'^auth/', include('drf_social_oauth2.urls', namespace='drf')),
 
-        # Swagger and ReDoc documentation URLs
+    # Swagger and ReDoc documentation URLs
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
