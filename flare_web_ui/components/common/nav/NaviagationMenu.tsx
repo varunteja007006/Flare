@@ -57,7 +57,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function NavigationMenuComp() {
   return (
-    <div className="flex w-full justify-start dark:bg-neutral-950 bg-white px-8 py-4 dark:text-neutral-200 md:justify-between items-center border-b border-sky-800 dark:border-black relative">
+    <div className="flex w-full justify-start dark:bg-neutral-950 bg-white px-8 py-4 dark:text-neutral-200 md:justify-between items-center relative">
       <IconBadge />
       <NavigationMenu>
         <NavigationMenuList>
