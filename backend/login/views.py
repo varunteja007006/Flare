@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.authentication import TokenAuthentication
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
@@ -43,6 +43,43 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             return Response({'error': f'Missing token: {str(e)}', 'success': False}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             return Response({'error': str(e), 'success': False}, status=status.HTTP_400_BAD_REQUEST)
+
+class CustomTokenRefreshView(TokenRefreshView):
+    def post(self, request, *args, **kwargs):
+        try:
+            response = super().post(request, *args, **kwargs)
+
+            refresh_token = request.COOKIES.get('refresh_token')
+            request.data["refresh"] = refresh_token
+
+            if 'access' in response.data and 'refresh' in response.data:
+                access_token = response.data['access']
+                refresh_token = response.data['refresh']
+                # Set cookies in the existing response object
+                response.set_cookie(
+                    key='access_token', 
+                    value=access_token, 
+                    httponly=True, 
+                    secure=True, 
+                    samesite='None',
+                    path='/'
+                )
+                response.set_cookie(
+                    key='refresh_token', 
+                    value=refresh_token, 
+                    httponly=True, 
+                    secure=True, 
+                    samesite='None',
+                    path='/'
+                )
+                response.data = {'success': True}
+
+            return response
+        except KeyError as e:
+            return Response({'error': f'Missing token: {str(e)}', 'success': False}, status=status.HTTP_400_BAD_REQUEST)            
+        except Exception as e:
+            return Response({'error': str(e), 'success': False}, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 def login(request):
