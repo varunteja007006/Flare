@@ -48,13 +48,12 @@ class CustomTokenRefreshView(TokenRefreshView):
     def post(self, request, *args, **kwargs):
         try:
             response = super().post(request, *args, **kwargs)
-
+            tokens = response.data
             refresh_token = request.COOKIES.get('refresh_token')
-            request.data["refresh"] = refresh_token
 
-            if 'access' in response.data and 'refresh' in response.data:
-                access_token = response.data['access']
-                refresh_token = response.data['refresh']
+            if 'access' in tokens and 'refresh' in tokens:
+                access_token = tokens['access']
+                refresh_token = tokens['refresh']
                 # Set cookies in the existing response object
                 response.set_cookie(
                     key='access_token', 
