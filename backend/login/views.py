@@ -5,6 +5,44 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.authentication import TokenAuthentication
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        try:
+            response = super().post(request, *args, **kwargs)
+            tokens = response.data
+
+            # Check if tokens are present
+            if 'access' in tokens and 'refresh' in tokens:
+                access_token = tokens['access']
+                refresh_token = tokens['refresh']
+
+                # Set cookies in the existing response object
+                response.set_cookie(
+                    key='access_token', 
+                    value=access_token, 
+                    httponly=True, 
+                    secure=True, 
+                    samesite='None',
+                    path='/'
+                )
+                response.set_cookie(
+                    key='refresh_token', 
+                    value=refresh_token, 
+                    httponly=True, 
+                    secure=True, 
+                    samesite='None',
+                    path='/'
+                )
+                response.data = {'success': True}
+
+            return response
+        
+        except KeyError as e:
+            return Response({'error': f'Missing token: {str(e)}', 'success': False}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': str(e), 'success': False}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def login(request):
@@ -52,8 +90,6 @@ def signup(request):
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-
-
 @api_view(['POST'])
 def logout(request):
     try:
@@ -75,7 +111,6 @@ def test_token(request):
         return Response(user_data, status=status.HTTP_200_OK)
     else:
         return Response({'error': 'User not authenticated'},status=status.HTTP_401_UNAUTHORIZED)
-
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated, IsAdminUser])
