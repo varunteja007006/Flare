@@ -1,4 +1,3 @@
-import { getUser } from "@/api/user/user.api";
 import { StateCreator } from "zustand";
 
 type UserState = {
@@ -8,24 +7,23 @@ type UserState = {
 
 type UserActions = {
   fetchUser: () => Promise<void>;
+  updateUser: (name: keyof UserState, value: string) => void;
 };
 
 export type UserSlice = UserState & UserActions;
 
 export const createUserSlice: StateCreator<
   UserSlice,
-  [],
-  //   [["zustand/immer", never]],
+  [["zustand/immer", never]],
   [],
   UserSlice
 > = (set) => ({
   email: "",
   full_name: "",
-  fetchUser: async () => {
-    const data = await getUser();
-    set({
-      full_name: data?.full_name ?? "",
-      email: data?.email ?? "",
+  fetchUser: async () => {},
+  updateUser: (name, value) => {
+    set((state) => {
+      state[name] = value;
     });
   },
 });

@@ -4,3 +4,8 @@ export type User = {
   token: string;
   created: string;
 };
+
+export type UserAuthPayload = {
+  username: string;
+  password: string;
+};

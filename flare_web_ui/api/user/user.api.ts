@@ -1,16 +1,13 @@
 import axios from "@/lib/axios";
-import { User } from "@/types/user";
+import { User, UserAuthPayload } from "@/types/user";
 
-const getUser = async () => {
+const loginUser = async (data: UserAuthPayload) => {
   try {
-    const response = await axios.post<User>("/api/v1/auth/login", {
-      username: "varun",
-      password: "varun123",
-    });
+    const response = await axios.post<User>("/api/v1/auth/login", data);
     return response.data;
   } catch (error) {
     console.error(error);
   }
 };
 
-export { getUser };
+export { loginUser };
